@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 597e90e9d84c0914899976830db69f5a
+guid: c3bdc901f645c3a4287339f2b89ba2f9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1523819517895135780
-    second: card-015_0
+      213: -1545700011113165359
+    second: card-white_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,11 +48,11 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 20, y: 20, z: 20, w: 20}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: card-015_0
+      name: card-white_0
       rect:
         serializedVersion: 2
         x: 2
@@ -134,15 +134,15 @@ TextureImporter:
         width: 166
         height: 248
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cddad06d83e4adae0800000000000000
-      internalID: -1523819517895135780
+      spriteID: 1dd484487029c8ae0800000000000000
+      internalID: -1545700011113165359
       vertices: []
       indices: 
       edges: []
@@ -152,7 +152,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      card-015_0: -1523819517895135780
+      card-white_0: -1545700011113165359
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

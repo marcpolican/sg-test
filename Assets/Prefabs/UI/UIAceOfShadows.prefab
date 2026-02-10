@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2113082957258478302, guid: 3d507a3c0362e3d4cb0a8e50897ed936, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3661796241487595796, guid: 3d507a3c0362e3d4cb0a8e50897ed936, type: 3}
       propertyPath: m_Name
-      value: UIAceOfShadows Variant
+      value: UIAceOfShadows
       objectReference: {fileID: 0}
     - target: {fileID: 4007568343597728245, guid: 3d507a3c0362e3d4cb0a8e50897ed936, type: 3}
       propertyPath: m_Pivot.x
