@@ -6,8 +6,6 @@ public class CardTable : MonoBehaviour
 {
     [SerializeField] private Transform containerLeft;
     [SerializeField] private Transform containerRight;
-    [SerializeField] private float cardStackOffset = 0.02f;
-    [SerializeField] private float cardStackOffsetMax = 0.10f;
     [SerializeField] private AnimationCurve cardStackOffsetCurve;
 
     private CardConfig cardConfig;
@@ -80,10 +78,9 @@ public class CardTable : MonoBehaviour
             cardsLeft.Push(sr);
             sr.sortingOrder = cardsLeft.Count;
         }
-
     }
 
-    private IEnumerator AdjustPositionOfCards(Transform container)
+    private IEnumerator AdjustPositionOfCards(Transform container, bool animate = true)
     {
         Vector3 startPos = container.position;
 
@@ -95,8 +92,11 @@ public class CardTable : MonoBehaviour
             transform.position = startPos;
             transform.gameObject.SetActive(true);
 
-            yield return null;
+            if (animate)
+                yield return null;
         }
+
+        yield break;
     }
 
 }
