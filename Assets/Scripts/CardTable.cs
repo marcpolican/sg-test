@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,57 +7,85 @@ using TMPro;
 
 public class CardTable : MonoBehaviour
 {
+    [SerializeField] private UIMessageBox uiMessageBox;
+
     [SerializeField] private Transform containerLeft;
     [SerializeField] private Transform containerRight;
     [SerializeField] private Transform animMidPoint;
     [SerializeField] private AnimationCurve cardStackOffsetCurve;
+    [SerializeField] private AnimationCurve scaleEaseCurve;
     [SerializeField] private float moveCardDuration = 1.0f;
     [SerializeField] private Vector3 scaleMidPoint = new Vector3(1.2f, 1.2f, 1.0f);
-
-    [SerializeField] private TextMeshProUGUI textButtonSpeed;
 
     private CardConfig cardConfig;
     private Stack<SpriteRenderer> cardsLeft = new();
     private Stack<SpriteRenderer> cardsRight = new();
-
     private Sequence moveSequence;
-    private int currentSpeed = 1;
 
-    private bool isPlayingAnimation = false;
+    public bool CanPlay => cardsLeft.Count > 0;
+
+    private bool isPlaying = false;
+    public bool IsPlaying
+    {
+        get => isPlaying;
+        private set 
+        {
+            isPlaying = value;
+            IsPlayingChanged?.Invoke(isPlaying);
+        }
+    }
+
+    private int currentSpeed = 1;
+    public int CurrentSpeed 
+    { 
+        get => currentSpeed;
+        private set
+        {
+            currentSpeed = value;
+            Time.timeScale = currentSpeed;
+            OnSpeedChanged?.Invoke(currentSpeed);
+        }
+    }
+
+    public event Action<bool> IsPlayingChanged;
+    public event Action<int> OnSpeedChanged;
+    public event Action<int, int> OnCountChanged;
 
     public void Initialize()
     {
         StartCoroutine(InitializeCoroutine());
     }
 
-    public void PlayAnimation()
+    public void TogglePlay()
     {
-        isPlayingAnimation = true;
-        MoveNextCardAnimation();
-    }
+        if (!CanPlay)
+            return;
 
-    public void PauseAnimation()
-    {
-        isPlayingAnimation = false;
+        IsPlaying = !IsPlaying;
+
+        if (IsPlaying)
+            MoveNextCardAnimation();
     }
 
     public void ToggleSpeed()
     {
-        currentSpeed++;
-        if (currentSpeed > 3)
-            currentSpeed = 1;
+        CurrentSpeed++;
+        if (CurrentSpeed > 4)
+            CurrentSpeed = 1;
+    }
 
-        Time.timeScale = currentSpeed;
-
-        textButtonSpeed.text = $"Speed x{currentSpeed}";
+    private void TriggerCountChanged()
+    {
+        OnCountChanged?.Invoke(cardsLeft.Count, cardsRight.Count);
     }
 
     private void MoveNextCardAnimation()
     {
-        if (cardsLeft.Count <= 0) return;
+        if (!CanPlay) return;
         if (moveSequence != null && moveSequence.IsPlaying()) return;
 
         var card = cardsLeft.Pop();
+        TriggerCountChanged();
         card.sortingOrder = cardConfig.MaxCards;
 
         // Figure out destination
@@ -77,8 +106,7 @@ public class CardTable : MonoBehaviour
 
         moveSequence.Insert(
                 0.0f,
-                card.transform.DOScale(scaleMidPoint, halfDuration)
-                .SetEase(Ease.InOutQuart));
+                card.transform.DOScale(scaleMidPoint, halfDuration).SetEase(scaleEaseCurve));
 
         moveSequence.Append(
                 card.transform.DOMove(destPos, halfDuration)
@@ -86,20 +114,34 @@ public class CardTable : MonoBehaviour
 
         moveSequence.Insert(
                 halfDuration,
-                card.transform.DOScale(Vector3.one, halfDuration)
-                .SetEase(Ease.InOutQuart));
+                card.transform.DOScale(Vector3.one, halfDuration));
 
         moveSequence.Play().OnComplete(() => 
         {
             card.transform.SetParent(containerRight);
             card.transform.SetAsLastSibling();
             cardsRight.Push(card);
+            TriggerCountChanged();
             card.sortingOrder = cardsRight.Count;
             AdjustPositionOfCards(containerRight);
             moveSequence = null;
 
-            if (isPlayingAnimation)
-                MoveNextCardAnimation();
+            if (IsPlaying)
+            {
+                if (CanPlay) 
+                {
+                    // TODO: improve on this if I have time
+                    // I don't really like that we're calling it again from here
+                    MoveNextCardAnimation();
+                }
+                else
+                {
+                    // We're done with all the cards
+                    CurrentSpeed = 1;
+                    IsPlaying = false;
+                    uiMessageBox.gameObject.SetActive(true);
+                }
+            }
         });
     }
 
@@ -117,33 +159,34 @@ public class CardTable : MonoBehaviour
 
     private IEnumerator InitializeCoroutine()
     {
-        ClearContainers();
+        CurrentSpeed = 1;
+        IsPlaying = false;
+        uiMessageBox.gameObject.SetActive(false);
+
+        // wait for the coroutine to finish
+        while (moveSequence != null && moveSequence.IsPlaying())
+        {
+            yield return null;
+        }
 
         // need to wait for next frame to actually destroy the children
+        ClearContainers();
         yield return null; 
 
         PopulateLeft();
-
         AdjustPositionOfCards(containerLeft);
     }
 
     private void ClearContainers()
     {
-        if (containerLeft != null)
-            containerLeft.DestroyChildren();
-        
-        if (containerRight != null)
-            containerRight.DestroyChildren();
-
         cardsLeft.Clear();
         cardsRight.Clear();
+        containerLeft.DestroyChildren();
+        containerRight.DestroyChildren();
     }
 
     private void PopulateLeft()
     {
-        if (containerLeft == null) 
-            return;
-
         for (int i = cardConfig.Cards.Length - 1; i >= 0; i--)
         {
             var cardSprite = cardConfig.Cards[i];
@@ -164,6 +207,8 @@ public class CardTable : MonoBehaviour
             cardsLeft.Push(sr);
             sr.sortingOrder = cardsLeft.Count;
         }
+
+        TriggerCountChanged();
     }
 
     private void AdjustPositionOfCards(Transform container)
