@@ -5,4 +5,6 @@ public class CardConfig : ScriptableObject
 {
     public Sprite CardBack;
     public Sprite[] Cards;
+
+    public int MaxCards => Cards.Length;
 }
