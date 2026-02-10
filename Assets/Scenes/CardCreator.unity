@@ -664,7 +664,7 @@ MonoBehaviour:
   renderTexture: {fileID: 8400000, guid: 6f9f63053b490a94296b227c553ff974, type: 2}
   background: {fileID: 1322716361}
   text: {fileID: 1111316075}
-  maxSprites: 5
+  maxSprites: 144
   gradient:
     serializedVersion: 2
     key0: {r: 1, g: 0.6, b: 0.6, a: 1}
