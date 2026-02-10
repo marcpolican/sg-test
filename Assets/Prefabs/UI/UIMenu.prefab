@@ -32,10 +32,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4407299316876900143}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -1416}
-  m_SizeDelta: {x: -91.94568, y: 133.9477}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0.000030517578, y: 83}
+  m_SizeDelta: {x: -91.94568, y: 133.94775}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &174669514078142552
 CanvasRenderer:
@@ -293,12 +293,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 60
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 60
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -593,7 +593,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2678930677969186597}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 539480152815456}
+        m_TargetAssemblyTypeName: UIMenu, Assembly-CSharp
+        m_MethodName: OnButtonSceneChange
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 2-MagicWords
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1782496613051635061
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,7 +804,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2222103265362625851}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 539480152815456}
+        m_TargetAssemblyTypeName: UIMenu, Assembly-CSharp
+        m_MethodName: OnButtonSceneChange
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 3-PhoenixFlame
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6548339678789293760
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,7 +937,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6643368508418354349}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 539480152815456}
+        m_TargetAssemblyTypeName: UIMenu, Assembly-CSharp
+        m_MethodName: OnButtonSceneChange
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 1-AceOfShadows
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8369305629261343106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,12 +1042,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 60
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 60
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1062,6 +1098,7 @@ GameObject:
   - component: {fileID: 1087595822741724135}
   - component: {fileID: 1673598048078156983}
   - component: {fileID: 8074669260684174892}
+  - component: {fileID: 539480152815456}
   m_Layer: 5
   m_Name: UIMenu
   m_TagString: Untagged
@@ -1152,6 +1189,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &539480152815456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8939866426283985175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 282f7b740f9c55945a28edcb2fec5483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9128800387209406314
 GameObject:
   m_ObjectHideFlags: 0
@@ -1244,12 +1293,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 60
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 60
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
