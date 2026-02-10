@@ -69,22 +69,24 @@ public class CardTable : MonoBehaviour
 
         moveSequence = DOTween.Sequence();
 
+        float halfDuration = moveCardDuration * 0.5f;
+
         moveSequence.Append(
-                card.transform.DOMove(animMidPoint.position, moveCardDuration * 0.5f)
+                card.transform.DOMove(animMidPoint.position, halfDuration)
                 .SetEase(Ease.InOutQuart));
 
         moveSequence.Insert(
                 0.0f,
-                card.transform.DOScale(scaleMidPoint, moveCardDuration * 0.5f)
+                card.transform.DOScale(scaleMidPoint, halfDuration)
                 .SetEase(Ease.InOutQuart));
 
         moveSequence.Append(
-                card.transform.DOMove(destPos, moveCardDuration * 0.5f) 
+                card.transform.DOMove(destPos, halfDuration)
                 .SetEase(Ease.InOutQuart));
 
         moveSequence.Insert(
-                moveCardDuration * 0.5f,
-                card.transform.DOScale(Vector3.one, moveCardDuration * 0.5f)
+                halfDuration,
+                card.transform.DOScale(Vector3.one, halfDuration)
                 .SetEase(Ease.InOutQuart));
 
         moveSequence.Play().OnComplete(() => 
