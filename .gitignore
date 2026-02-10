@@ -52,3 +52,5 @@ mono_crash.*
 
 /Assets/tags
 /Assets/tags.meta
+
+.vscode
