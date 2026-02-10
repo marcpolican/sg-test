@@ -74,6 +74,16 @@ public class CardTable : MonoBehaviour
             CurrentSpeed = 1;
     }
 
+    public void CleanUpAndExit()
+    {
+        CurrentSpeed = 1;
+        IsPlaying = false;
+        if (moveSequence != null)
+        {
+            moveSequence.Kill();
+        }
+    }
+
     private void TriggerCountChanged()
     {
         OnCountChanged?.Invoke(cardsLeft.Count, cardsRight.Count);

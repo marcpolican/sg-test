@@ -10,6 +10,12 @@ public class UIAceOfShadows : UIBase
 
     [SerializeField] private CardTable cardTable;
 
+    public void OnButtonBack()
+    {
+        cardTable.CleanUpAndExit();
+        OnButtonSceneChange("0-Menu");
+    }
+
     public void OnButtonReset()
     {
         cardTable.Initialize();

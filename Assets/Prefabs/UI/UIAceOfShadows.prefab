@@ -1153,9 +1153,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 243194312345744606, guid: 3d507a3c0362e3d4cb0a8e50897ed936, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 243194312345744606, guid: 3d507a3c0362e3d4cb0a8e50897ed936, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 733344352601568344}
+    - target: {fileID: 243194312345744606, guid: 3d507a3c0362e3d4cb0a8e50897ed936, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnButtonBack
+      objectReference: {fileID: 0}
     - target: {fileID: 243194312345744606, guid: 3d507a3c0362e3d4cb0a8e50897ed936, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UIAceOfShadows, Assembly-CSharp
