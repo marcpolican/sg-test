@@ -7,8 +7,6 @@ using TMPro;
 
 public class CardTable : MonoBehaviour
 {
-    [SerializeField] private UIMessageBox uiMessageBox;
-
     [SerializeField] private Transform animMidPoint;
     [SerializeField] private AnimationCurve scaleEaseCurve;
     [SerializeField] private float moveCardDuration = 1.0f;
@@ -47,6 +45,7 @@ public class CardTable : MonoBehaviour
 
     public event Action<bool> IsPlayingChanged;
     public event Action<int> OnSpeedChanged;
+    public event Action OnAnimationComplete;
 
     public void Initialize()
     {
@@ -59,9 +58,6 @@ public class CardTable : MonoBehaviour
             return;
 
         IsPlaying = !IsPlaying;
-
-        if (IsPlaying)
-            MoveNextCardAnimation();
     }
 
     public void ToggleSpeed()
@@ -81,6 +77,45 @@ public class CardTable : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        cardConfig = Resources.Load<CardConfig>("CardConfig");
+        if (cardConfig == null)
+        {
+            Debug.LogError("CardConfig cannot be loaded");
+            return;
+        }
+
+        Initialize();
+    }
+
+    private void Update()
+    {
+        if (IsPlaying)
+        {
+            MoveNextCardAnimation();
+        }
+    }
+
+    private IEnumerator InitializeCoroutine()
+    {
+        CurrentSpeed = 1;
+        IsPlaying = false;
+
+        // wait for the coroutine to finish
+        while (moveSequence != null && moveSequence.IsPlaying())
+        {
+            yield return null;
+        }
+
+        // need to wait for next frame to actually destroy the children
+        stackLeft.Clear();
+        stackRight.Clear();
+        yield return null; 
+
+        stackLeft.Populate();
+    }
+
     private void MoveNextCardAnimation()
     {
         if (!CanPlay) return;
@@ -95,6 +130,8 @@ public class CardTable : MonoBehaviour
         float halfDuration = moveCardDuration * 0.5f;
 
         // Create DOTween sequence to move the card from left to right stacks
+        // 1. Move the card to the midpoint and scale it up
+        // 2. Move the card from the midpoint to the right stack and bring back to original scale
         moveSequence = DOTween.Sequence();
 
         moveSequence.Append(
@@ -118,55 +155,14 @@ public class CardTable : MonoBehaviour
             stackRight.PushCard(card);
             moveSequence = null;
 
-            if (IsPlaying)
+            if (IsPlaying && !CanPlay)
             {
-                if (CanPlay) 
-                {
-                    // TODO: improve on this if I have time
-                    // I don't really like that we're calling it again from here
-                    MoveNextCardAnimation();
-                }
-                else
-                {
-                    // We're done with all the cards
-                    CurrentSpeed = 1;
-                    IsPlaying = false;
-                    uiMessageBox.gameObject.SetActive(true);
-                }
+                // We're done with all the cards
+                CurrentSpeed = 1;
+                IsPlaying = false;
+                OnAnimationComplete?.Invoke();
             }
         });
-    }
-
-    private void Start()
-    {
-        cardConfig = Resources.Load<CardConfig>("CardConfig");
-        if (cardConfig == null)
-        {
-            Debug.LogError("CardConfig cannot be loaded");
-            return;
-        }
-
-        Initialize();
-    }
-
-    private IEnumerator InitializeCoroutine()
-    {
-        CurrentSpeed = 1;
-        IsPlaying = false;
-        uiMessageBox.gameObject.SetActive(false);
-
-        // wait for the coroutine to finish
-        while (moveSequence != null && moveSequence.IsPlaying())
-        {
-            yield return null;
-        }
-
-        // need to wait for next frame to actually destroy the children
-        stackLeft.Clear();
-        stackRight.Clear();
-        yield return null; 
-
-        stackLeft.Populate();
     }
 }
 

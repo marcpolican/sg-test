@@ -3,6 +3,8 @@ using TMPro;
 
 public class UIAceOfShadows : UIBase
 {
+    [SerializeField] private UIMessageBox uiMessageBox;
+
     [SerializeField] private TextMeshProUGUI textButtonSpeed;
     [SerializeField] private TextMeshProUGUI textButtonPlay;
 
@@ -16,6 +18,7 @@ public class UIAceOfShadows : UIBase
 
     public void OnButtonReset()
     {
+        uiMessageBox.gameObject.SetActive(false);
         cardTable.Initialize();
     }
 
@@ -29,16 +32,28 @@ public class UIAceOfShadows : UIBase
         cardTable.ToggleSpeed();
     }
 
+    private void Start()
+    {
+        uiMessageBox.gameObject.SetActive(false);
+    }
+
     private void OnEnable()
     {
         cardTable.IsPlayingChanged += IsPlayingChanged;
         cardTable.OnSpeedChanged += OnSpeedChanged;
+        cardTable.OnAnimationComplete += OnAnimationComplete;
     }
 
     private void OnDisable()
     {
         cardTable.IsPlayingChanged -= IsPlayingChanged;
         cardTable.OnSpeedChanged -= OnSpeedChanged;
+        cardTable.OnAnimationComplete -= OnAnimationComplete;
+    }
+
+    private void OnAnimationComplete()
+    {
+        uiMessageBox.gameObject.SetActive(true);
     }
 
     private void IsPlayingChanged(bool isPlaying)

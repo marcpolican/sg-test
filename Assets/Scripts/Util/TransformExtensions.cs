@@ -4,7 +4,7 @@ public static class TransformExtensions
 {
     public static void ResetTransformation(this Transform transform)
     {
-        transform.position = Vector3.zero;
+        transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         transform.localScale = Vector3.one;
     }

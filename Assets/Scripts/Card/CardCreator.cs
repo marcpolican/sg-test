@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// This is a tool to auto-create sprites for cards
+// Currently every iteration will change the text on the card as well as the background color
+// The gradient is used to determine which color to use per card depending on the index
 public class CardCreator : MonoBehaviour
 {
     [SerializeField] private RenderTexture renderTexture;

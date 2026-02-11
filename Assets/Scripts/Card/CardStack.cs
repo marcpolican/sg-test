@@ -5,13 +5,14 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 
+// Holds a list of cards in the stackSprites
 public class CardStack : MonoBehaviour
 {
+    private static CardConfig cardConfig;
+
     [SerializeField] private Transform container;
     [SerializeField] private TextMeshPro textCount;
-    [SerializeField] private AnimationCurve cardStackOffsetCurve;
 
-    private CardConfig cardConfig;
     private Stack<SpriteRenderer> stackSprites = new();
 
     public int Count => stackSprites.Count;
@@ -76,10 +77,13 @@ public class CardStack : MonoBehaviour
 
     private void Awake()
     {
-        cardConfig = Resources.Load<CardConfig>("CardConfig");
         if (cardConfig == null)
         {
-            Debug.LogError("CardConfig cannot be loaded");
+            cardConfig = Resources.Load<CardConfig>("CardConfig");
+            if (cardConfig == null)
+            {
+                Debug.LogError("CardConfig cannot be loaded");
+            }
         }
     }
 
@@ -102,7 +106,7 @@ public class CardStack : MonoBehaviour
             return Vector3.zero;
 
         Vector3 localPos = Vector3.zero;
-        localPos.y = cardStackOffsetCurve.Evaluate((float) index / (float) cardConfig.MaxCards);
+        localPos.y = cardConfig.OffsetCurve.Evaluate((float) index / (float) cardConfig.MaxCards);
         return localPos;
     }
 
