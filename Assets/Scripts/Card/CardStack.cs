@@ -45,6 +45,7 @@ public class CardStack : MonoBehaviour
     {
         container.DestroyChildren();
         stackSprites.Clear();
+        UpdateTextCount();
     }
 
     public void Populate()

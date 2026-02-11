@@ -10,7 +10,6 @@ public class CardTable : MonoBehaviour
     [SerializeField] private UIMessageBox uiMessageBox;
 
     [SerializeField] private Transform animMidPoint;
-    [SerializeField] private AnimationCurve cardStackOffsetCurve;
     [SerializeField] private AnimationCurve scaleEaseCurve;
     [SerializeField] private float moveCardDuration = 1.0f;
     [SerializeField] private Vector3 scaleMidPoint = new Vector3(1.2f, 1.2f, 1.0f);
@@ -48,7 +47,6 @@ public class CardTable : MonoBehaviour
 
     public event Action<bool> IsPlayingChanged;
     public event Action<int> OnSpeedChanged;
-    public event Action<int, int> OnCountChanged;
 
     public void Initialize()
     {
