@@ -17,6 +17,9 @@ public class CardTable : MonoBehaviour
     [SerializeField] private float moveCardDuration = 1.0f;
     [SerializeField] private Vector3 scaleMidPoint = new Vector3(1.2f, 1.2f, 1.0f);
 
+    [SerializeField] private TextMeshPro countLeft;
+    [SerializeField] private TextMeshPro countRight;
+
     private CardConfig cardConfig;
     private Stack<SpriteRenderer> cardsLeft = new();
     private Stack<SpriteRenderer> cardsRight = new();
@@ -86,6 +89,8 @@ public class CardTable : MonoBehaviour
 
     private void TriggerCountChanged()
     {
+        countLeft.text = cardsLeft.Count.ToString();
+        countRight.text = cardsRight.Count.ToString();
         OnCountChanged?.Invoke(cardsLeft.Count, cardsRight.Count);
     }
 
