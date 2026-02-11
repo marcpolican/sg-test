@@ -6,7 +6,6 @@ using TMPro;
 
 public class CardCreator : MonoBehaviour
 {
-    //[SerializeField] private Camera camera;
     [SerializeField] private RenderTexture renderTexture;
     [SerializeField] private Image background;
     [SerializeField] private TextMeshProUGUI text;

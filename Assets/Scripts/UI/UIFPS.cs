@@ -9,15 +9,18 @@ public class UIFPS : MonoBehaviour
     private int frameCounter = 0;
     private float timeElapsed = 0.0f;
 
-    static private UIFPS instance = null;
-    static public void Initialize()
+    private static UIFPS instance = null;
+    public static void Initialize()
     {
         if (instance != null) 
             return;
 
         var goPrefab = Resources.Load<GameObject>("UIFPS");
         if (goPrefab == null) 
+        {
+            Debug.LogError("Cannot find UIFPS prefab");
             return;
+        }
 
         var go = Instantiate(goPrefab);
         instance = go.GetComponent<UIFPS>();

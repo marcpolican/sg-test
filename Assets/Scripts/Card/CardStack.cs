@@ -98,6 +98,9 @@ public class CardStack : MonoBehaviour
 
     private Vector3 GetCardLocalPos(int index)
     {
+        if (cardConfig == null) 
+            return Vector3.zero;
+
         Vector3 localPos = Vector3.zero;
         localPos.y = cardStackOffsetCurve.Evaluate((float) index / (float) cardConfig.MaxCards);
         return localPos;

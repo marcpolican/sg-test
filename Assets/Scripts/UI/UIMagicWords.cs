@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 
+// Define the classes that will hold the json data
 [System.Serializable]
 public class DialogueInfo
 {
@@ -30,19 +32,39 @@ public class DialogueModel
     public List<AvatarInfo> avatars;
 }
 
+
 public class UIMagicWords : UIBase
 {
     [SerializeField] private string urlData = "https://private-624120-softgamesassignment.apiary-mock.com/v3/magicwords";
     [SerializeField] private TextMeshProUGUI textStatus;
     [SerializeField] private Transform contentParent;
-    [SerializeField] private GameObject dialogueLeft;
-    [SerializeField] private GameObject dialogueRight;
+    [SerializeField] private GameObject dialogueLeftPrefab;
+    [SerializeField] private GameObject dialogueRightPrefab;
 
+    private List<Texture2D> loadedTextures = new();
     private DialogueModel model;
+    private Regex emojiRegex;
 
     private void Start()
     {
-        Initialize();
+        emojiRegex = new Regex(@"{(\w+)}", RegexOptions.Compiled);
+        _ = Initialize();
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var avatar in model.avatars)
+        {
+            if (avatar.sprite == null) continue;
+            Destroy(avatar.sprite);
+            avatar.sprite = null;
+        }
+
+        foreach (var texture in loadedTextures)
+        {
+            if (texture == null) continue;
+            Destroy(texture);
+        }
     }
 
     private async Awaitable Initialize()
@@ -117,6 +139,7 @@ public class UIMagicWords : UIBase
             {
                 // Create sprite from the texture
                 var texture = DownloadHandlerTexture.GetContent(webRequest);
+                loadedTextures.Add(texture);
                 avatarInfo.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
                 Debug.Log($"Created sprite from: {avatarInfo.url}");
             }
@@ -135,13 +158,13 @@ public class UIMagicWords : UIBase
             if (avatarInfo == null) continue;
 
             GameObject go;
-            if (string.Compare(avatarInfo.position, "left") == 0)
+            if (avatarInfo.position.Equals("left", StringComparison.OrdinalIgnoreCase))
             {
-                go = Instantiate(dialogueLeft);
+                go = Instantiate(dialogueLeftPrefab);
             }
             else
             {
-                go = Instantiate(dialogueRight);
+                go = Instantiate(dialogueRightPrefab);
             }
             
             go.transform.SetParent(contentParent);
@@ -157,7 +180,7 @@ public class UIMagicWords : UIBase
 
     private AvatarInfo GetValidAvatarInfo(string name)
     {
-        return model.avatars.Find((a) => a.sprite != null && string.Compare(a.name, name, true) == 0);
+        return model.avatars.Find((a) => a.sprite != null && a.name.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
 
     private void SetStatusText(string status)
@@ -167,10 +190,9 @@ public class UIMagicWords : UIBase
 
     private void ProcessDialogueText()
     {
-        Regex regex = new Regex(@"{(\w+)}", RegexOptions.Compiled);
         foreach (var dialogue in model.dialogue)
         {
-            dialogue.text = regex.Replace(dialogue.text, match =>
+            dialogue.text = emojiRegex.Replace(dialogue.text, match =>
             {
                 string key = match.Groups[1].Value;
                 return $"<sprite name=\"{key}\">";
