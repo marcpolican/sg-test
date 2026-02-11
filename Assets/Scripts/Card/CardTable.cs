@@ -9,23 +9,19 @@ public class CardTable : MonoBehaviour
 {
     [SerializeField] private UIMessageBox uiMessageBox;
 
-    [SerializeField] private Transform containerLeft;
-    [SerializeField] private Transform containerRight;
     [SerializeField] private Transform animMidPoint;
     [SerializeField] private AnimationCurve cardStackOffsetCurve;
     [SerializeField] private AnimationCurve scaleEaseCurve;
     [SerializeField] private float moveCardDuration = 1.0f;
     [SerializeField] private Vector3 scaleMidPoint = new Vector3(1.2f, 1.2f, 1.0f);
 
-    [SerializeField] private TextMeshPro countLeft;
-    [SerializeField] private TextMeshPro countRight;
+    [SerializeField] private CardStack stackLeft;
+    [SerializeField] private CardStack stackRight;
 
     private CardConfig cardConfig;
-    private Stack<SpriteRenderer> cardsLeft = new();
-    private Stack<SpriteRenderer> cardsRight = new();
     private Sequence moveSequence;
 
-    public bool CanPlay => cardsLeft.Count > 0;
+    public bool CanPlay => stackLeft.Count > 0;
 
     private bool isPlaying = false;
     public bool IsPlaying
@@ -87,33 +83,21 @@ public class CardTable : MonoBehaviour
         }
     }
 
-    private void TriggerCountChanged()
-    {
-        countLeft.text = cardsLeft.Count.ToString();
-        countRight.text = cardsRight.Count.ToString();
-        OnCountChanged?.Invoke(cardsLeft.Count, cardsRight.Count);
-    }
-
     private void MoveNextCardAnimation()
     {
         if (!CanPlay) return;
         if (moveSequence != null && moveSequence.IsPlaying()) return;
 
-        var card = cardsLeft.Pop();
-        TriggerCountChanged();
+        var card = stackLeft.PopTopCard();
+        if (card == null) return;
+
         card.sortingOrder = cardConfig.MaxCards;
 
-        // Figure out destination
-        Vector3 destPos = containerRight.position;
-        int childCount = containerRight.childCount;
-        if (childCount > 0)
-        {
-            destPos += GetCardLocalPos(childCount);
-        }
-
-        moveSequence = DOTween.Sequence();
-
+        Vector3 destPos = stackRight.GetPositionOnTopOfStack();
         float halfDuration = moveCardDuration * 0.5f;
+
+        // Create DOTween sequence to move the card from left to right stacks
+        moveSequence = DOTween.Sequence();
 
         moveSequence.Append(
                 card.transform.DOMove(animMidPoint.position, halfDuration)
@@ -133,12 +117,7 @@ public class CardTable : MonoBehaviour
 
         moveSequence.Play().OnComplete(() => 
         {
-            card.transform.SetParent(containerRight);
-            card.transform.SetAsLastSibling();
-            cardsRight.Push(card);
-            TriggerCountChanged();
-            card.sortingOrder = cardsRight.Count;
-            AdjustPositionOfCards(containerRight);
+            stackRight.PushCard(card);
             moveSequence = null;
 
             if (IsPlaying)
@@ -185,65 +164,11 @@ public class CardTable : MonoBehaviour
         }
 
         // need to wait for next frame to actually destroy the children
-        ClearContainers();
+        stackLeft.Clear();
+        stackRight.Clear();
         yield return null; 
 
-        PopulateLeft();
-        AdjustPositionOfCards(containerLeft);
-    }
-
-    private void ClearContainers()
-    {
-        cardsLeft.Clear();
-        cardsRight.Clear();
-        containerLeft.DestroyChildren();
-        containerRight.DestroyChildren();
-    }
-
-    private void PopulateLeft()
-    {
-        for (int i = cardConfig.Cards.Length - 1; i >= 0; i--)
-        {
-            var cardSprite = cardConfig.Cards[i];
-            if (cardSprite == null) continue;
-
-            var go = new GameObject(cardSprite.name);
-            if (go == null) continue;
-
-            go.transform.SetParent(containerLeft);
-            go.transform.ResetTransformation();
-            go.transform.SetAsLastSibling();
-            go.SetActive(false);
-
-            var sr = go.AddComponent<SpriteRenderer>();
-            if (sr == null) continue;
-
-            sr.sprite = cardSprite;
-            cardsLeft.Push(sr);
-            sr.sortingOrder = cardsLeft.Count;
-        }
-
-        TriggerCountChanged();
-    }
-
-    private void AdjustPositionOfCards(Transform container)
-    {
-        Vector3 startPos = container.position;
-
-        int childCount = container.childCount;
-        for (int i = 0; i < childCount; i++)
-        {
-            var transform = container.GetChild(i);
-            transform.localPosition = GetCardLocalPos(i);
-            transform.gameObject.SetActive(true);
-        }
-    }
-
-    private Vector3 GetCardLocalPos(int index)
-    {
-        Vector3 localPos = Vector3.zero;
-        localPos.y = cardStackOffsetCurve.Evaluate((float) index / (float) cardConfig.MaxCards);
-        return localPos;
+        stackLeft.Populate();
     }
 }
 
