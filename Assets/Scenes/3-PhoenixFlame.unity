@@ -1559,7 +1559,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -1567,9 +1567,9 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.48037386, b: 0, a: 0}
+        key0: {r: 1, g: 0.5, b: 0, a: 0}
         key1: {r: 1, g: 0.48037386, b: 0, a: 0.54509807}
-        key2: {r: 1, g: 0.4764151, b: 0.4764151, a: 0}
+        key2: {r: 1, g: 0.48037386, b: 0, a: 0}
         key3: {r: 1, g: 0.4764151, b: 0.4764151, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -10165,7 +10165,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.48809588, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -11242,7 +11242,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -14714,7 +14714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1620905109
 Transform:
   m_ObjectHideFlags: 0
@@ -14741,7 +14741,7 @@ Animator:
   m_GameObject: {fileID: 1620905108}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dd4cd6a56aa2a7949927b842aa9d1582, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -14840,10 +14840,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5497164767806361558, guid: 336791d005d7d9344be396509f72aa47, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 5023314555247314016, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: flameAnimator
+      value: 
+      objectReference: {fileID: 1620905110}
     - target: {fileID: 7191025664329012252, guid: 336791d005d7d9344be396509f72aa47, type: 3}
       propertyPath: m_Name
       value: UIPhoenixFlame
