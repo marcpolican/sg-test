@@ -14840,10 +14840,74 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1837553577739893011, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837553577739893011, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837553577739893011, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837553577739893011, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110147284987138156, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110147284987138156, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110147284987138156, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110147284987138156, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224408046501339217, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224408046501339217, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224408046501339217, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224408046501339217, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5023314555247314016, guid: 336791d005d7d9344be396509f72aa47, type: 3}
       propertyPath: flameAnimator
       value: 
       objectReference: {fileID: 1620905110}
+    - target: {fileID: 6131691740565096600, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131691740565096600, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131691740565096600, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131691740565096600, guid: 336791d005d7d9344be396509f72aa47, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7191025664329012252, guid: 336791d005d7d9344be396509f72aa47, type: 3}
       propertyPath: m_Name
       value: UIPhoenixFlame
