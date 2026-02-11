@@ -29,8 +29,8 @@ public class CardStack : MonoBehaviour
         sr.transform.SetParent(container);
         sr.transform.SetAsLastSibling();
         sr.transform.localPosition = GetCardLocalPos(stackSprites.Count);
-
         sr.sortingOrder = stackSprites.Count;
+
         stackSprites.Push(sr);
         AdjustPositionOfCards();
         UpdateTextCount();
