@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
@@ -56,6 +57,8 @@ public class UIMagicWords : UIBase
             SetStatusText("No Data");
             return;
         }
+
+        ProcessDialogueText();
 
         SetStatusText("Fetching Avatars");
         List<Awaitable> tasks = new();
@@ -160,5 +163,18 @@ public class UIMagicWords : UIBase
     private void SetStatusText(string status)
     {
         textStatus.text = status;
+    }
+
+    private void ProcessDialogueText()
+    {
+        Regex regex = new Regex(@"{(\w+)}", RegexOptions.Compiled);
+        foreach (var dialogue in model.dialogue)
+        {
+            dialogue.text = regex.Replace(dialogue.text, match =>
+            {
+                string key = match.Groups[1].Value;
+                return $"<sprite name=\"{key}\">";
+            });
+        }
     }
 }
