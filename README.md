@@ -10,3 +10,8 @@ Scenes/CardCreator.unity is the scene that would generate teh 144 card sprites. 
 
 1. Load the CardCreator scene
 2. Press Play. The cards will automatically be generated.
+
+# Preview video
+
+https://github.com/user-attachments/assets/2a75c1fb-32f0-40c5-b871-2125c0fe2f3e
+
