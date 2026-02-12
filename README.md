@@ -1,3 +1,5 @@
+Playable build: https://marcpolican.github.io/sg-test/
+
 # Getting Started
 
 1. Open the project with Unity 6
