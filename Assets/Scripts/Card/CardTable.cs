@@ -62,8 +62,10 @@ public class CardTable : MonoBehaviour
 
     public void ToggleSpeed()
     {
+        const int maxSpeed = 4;
+
         CurrentSpeed++;
-        if (CurrentSpeed > 4)
+        if (CurrentSpeed > maxSpeed)
             CurrentSpeed = 1;
     }
 
@@ -121,31 +123,34 @@ public class CardTable : MonoBehaviour
         if (!CanPlay) return;
         if (moveSequence != null && moveSequence.IsPlaying()) return;
 
+        float halfDuration = moveCardDuration * 0.5f;
+
+        // Pop the top card from the left stack, make sure to set sorting order to the top most
         var card = stackLeft.PopTopCard();
         if (card == null) return;
 
         card.sortingOrder = cardConfig.MaxCards;
 
-        Vector3 destPos = stackRight.GetPositionOnTopOfStack();
-        float halfDuration = moveCardDuration * 0.5f;
-
         // Create DOTween sequence to move the card from left to right stacks
-        // 1. Move the card to the midpoint and scale it up
-        // 2. Move the card from the midpoint to the right stack and bring back to original scale
         moveSequence = DOTween.Sequence();
 
+        // Move to midpoint
         moveSequence.Append(
                 card.transform.DOMove(animMidPoint.position, halfDuration)
                 .SetEase(Ease.InOutQuart));
 
+        // Add scale when moving to midpoint
         moveSequence.Insert(
                 0.0f,
                 card.transform.DOScale(scaleMidPoint, halfDuration).SetEase(scaleEaseCurve));
 
+        // Move from midpoint to destination
+        Vector3 destPos = stackRight.GetPositionOnTopOfStack();
         moveSequence.Append(
                 card.transform.DOMove(destPos, halfDuration)
                 .SetEase(Ease.InOutQuart));
 
+        // Add scale back to 1 when moving to destination
         moveSequence.Insert(
                 halfDuration,
                 card.transform.DOScale(Vector3.one, halfDuration));
